@@ -15,7 +15,7 @@ namespace Business.Concrete
             _brandDal = brandDal;
         }
 
-        public void Add(Brand brand)
+        public void Insert(Brand brand)
         {
             if (brand.BrandName.Length >= 2)
             {
@@ -36,7 +36,6 @@ namespace Business.Concrete
             Console.WriteLine("Marka bilgisi başarıyla kaldırıldı.");
         }
 
- 
         public void Update(Brand brand)
         {
             if (brand.BrandName.Length >= 2)
@@ -55,9 +54,9 @@ namespace Business.Concrete
             return _brandDal.GetAll();
         }
 
-        List<Brand> IBrandService.GetCarsByBrandId(int BrandId)
+        public Brand GetByBrandId(int brandId)
         {
-            return _brandDal.GetAll(p => p.BrandId == BrandId);
+            return _brandDal.Get(b => b.BrandId == brandId);
         }
     }
 }

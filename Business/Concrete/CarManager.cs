@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,7 +17,7 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-        public void Add(Car car)
+        public void Insert(Car car)
         {
             if (car.DailyPrice > 0)
             {
@@ -40,16 +41,7 @@ namespace Business.Concrete
         {
             return _carDal.GetAll();
         }
-
-        public List<Car> GetCarsByBrandId(int BrandId)
-        {
-            return _carDal.GetAll(p => p.BrandId == BrandId);
-        }
-
-        public List<Car> GetCarsByColorId(int ColorId)
-        {
-            return _carDal.GetAll(p => p.ColorId == ColorId);
-        }
+       
 
         public void Update(Car car)
         {
@@ -62,6 +54,18 @@ namespace Business.Concrete
             {
                 Console.WriteLine("Araba veritabanında güncellenemedi. Günlük fiyat 0'dan büyük olmalıdır.");
             }
+        }
+
+      
+
+        public List<CarDetailDto> GetCarDetails()
+        {
+            return _carDal.GetCarDetails();
+        }
+
+        public Car GetById(int id)
+        {
+            return _carDal.Get(c => c.Id == id);
         }
     }
 }
