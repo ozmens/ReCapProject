@@ -1,4 +1,7 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -17,55 +20,54 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-        public void Insert(Car car)
+        public IResult Insert(Car car)
         {
             if (car.DailyPrice > 0)
             {
                 _carDal.Add(car);
-                Console.WriteLine("Araba veritabanına başarıyla eklendi.");
+                return new SuccessResult(Messages.CarAdded);
             }
-            else
-            {
-                Console.WriteLine("Araba veritabanına eklenemedi. Günlük fiyat 0'dan büyük olmalıdır.");
-            }
-                
-              
+            
+            return new ErrorResult(Messages.DailyPriceInvalid);
+           
+            
+
         }
 
-        public void Delete(Car car)
+        public IResult Delete(Car car)
         {
             _carDal.Delete(car);
+            return new SuccessResult(Messages.CarDeleted);
         }
 
-        public List<Car> GetAll()
+        public IDataResult<List<Car>> GetAll()
         {
-            return _carDal.GetAll();
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(),Messages.ListGenerated);
         }
        
 
-        public void Update(Car car)
+        public IResult Update(Car car)
         {
             if (car.DailyPrice > 0)
             {
                 _carDal.Update(car);
-                Console.WriteLine("Araba veritabanında başarıyla güncellendi.");
+                return new SuccessResult(Messages.CarUpdated);
             }
-            else
-            {
-                Console.WriteLine("Araba veritabanında güncellenemedi. Günlük fiyat 0'dan büyük olmalıdır.");
-            }
+            
+            return new ErrorResult(Messages.DailyPriceInvalid);
+            
         }
 
       
 
-        public List<CarDetailDto> GetCarDetails()
+        public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
-            return _carDal.GetCarDetails();
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(),Messages.ListGenerated);
         }
 
-        public Car GetById(int id)
+        public IDataResult<Car> GetById(int id)
         {
-            return _carDal.Get(c => c.Id == id);
+            return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == id),Messages.InfoGenerated);
         }
     }
 }

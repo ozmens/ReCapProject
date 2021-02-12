@@ -13,7 +13,7 @@ namespace ConsoleUI
             
             CarManager carManager = new CarManager(new EfCarDal());
 
-            foreach (var car in carManager.GetAll())
+            foreach (var car in carManager.GetAll().Data)
             {
                 Console.WriteLine(car.CarName + "/" + car.DailyPrice);
             }
@@ -26,10 +26,21 @@ namespace ConsoleUI
 
             Console.WriteLine("-----------İşlemler sonrası liste-----------");
 
-            foreach (var car in carManager.GetCarDetails())
+            var result = carManager.GetCarDetails();
+
+            if (result.Success==true)
             {
-                Console.WriteLine(car.CarName + "/" + car.BrandName + "/" + car.ColorName + "/" + car.DailyPrice);
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine(car.CarName + "/" + car.BrandName + "/" + car.ColorName + "/" + car.DailyPrice);
+                }
+                
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+            
 
             BrandManager brandManager = new BrandManager(new EfBrandDal());
 
@@ -46,7 +57,7 @@ namespace ConsoleUI
             colorManager.Update(new Entities.Concrete.Color { ColorId = 3, ColorName = "Sarı" });
             
 
-            foreach (var color in colorManager.GetAll())
+            foreach (var color in colorManager.GetAll().Data)
             {
                 Console.WriteLine(color.ColorId + "/" + color.ColorName);
             }
