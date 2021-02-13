@@ -42,7 +42,7 @@ namespace Business.Concrete
 
         public IDataResult<List<Car>> GetAll()
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(),Messages.ListGenerated);
+            return new SuccessResult<List<Car>>(_carDal.GetAll(),Messages.ListGenerated);
         }
        
 
@@ -62,12 +62,12 @@ namespace Business.Concrete
 
         public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(),Messages.ListGenerated);
+            return new SuccessResult<List<CarDetailDto>>(_carDal.GetCarDetails(),Messages.ListGenerated);
         }
 
         public IDataResult<Car> GetById(int id)
         {
-            return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == id),Messages.InfoGenerated);
+            return new SuccessResult<Car>(_carDal.Get(c => c.Id == id),Messages.InfoGenerated);
         }
     }
 }
