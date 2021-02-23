@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -36,10 +38,7 @@ namespace Business.Concrete
 
         public IResult Insert(Rental rental)
         {
-            if (rental.ReturnDate==null)
-            {
-                return new ErrorResult(Messages.RentalFailed);
-            }
+            ValidationTool.Validate(new RentalValidator(), rental);
             return new SuccessResult(Messages.RentalSuccess);
         }
 
