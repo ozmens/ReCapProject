@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities;
 using Core.Utilities.Results;
@@ -36,9 +37,10 @@ namespace Business.Concrete
             return new SuccessResult<Rental>(_rentalDal.Get(r => r.Id == id), Messages.InfoGenerated);
         }
 
+        [ValidationAspect(typeof(RentalValidator))]
         public IResult Insert(Rental rental)
         {
-            ValidationTool.Validate(new RentalValidator(), rental);
+            _rentalDal.Add(rental);
             return new SuccessResult(Messages.RentalSuccess);
         }
 
