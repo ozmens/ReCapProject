@@ -64,15 +64,26 @@ namespace ConsoleUI
 
             //colorManager.GetByColorId(4);
 
-            UserManager userManager = new UserManager(new EfUserDal());
-            userManager.Insert(new Entities.Concrete.User { FirstName = "Alaettin", LastName = "Özmen", Email = "alaettin@hotmail.com", Password = "Hazel" });
-            userManager.Insert(new Entities.Concrete.User { FirstName = "Rahim", LastName = "Öcal", Email = "rocal@gmail.com", Password = "rocal" });
+            //UserManager userManager = new UserManager(new EfUserDal());
+            //userManager.Insert(new Entities.Concrete.User { FirstName = "Alaettin", LastName = "Özmen", Email = "alaettin@hotmail.com", Password = "Hazel" });
+            //userManager.Insert(new Entities.Concrete.User { FirstName = "Rahim", LastName = "Öcal", Email = "rocal@gmail.com", Password = "rocal" });
 
             RentalManager rentalManager = new RentalManager(new EfRentalDal());
-            rentalManager.Insert(new Entities.Concrete.Rental { CarId = 2, CustomerId = 3, RentDate = new DateTime(2021, 02, 10), ReturnDate = new DateTime(2021, 02, 12) });
-            rentalManager.Insert(new Entities.Concrete.Rental { CarId = 3, CustomerId = 1, RentDate = new DateTime(2021, 02, 11), ReturnDate = null });
+            //rentalManager.Insert(new Entities.Concrete.Rental { CarId = 2, CustomerId = 3, RentDate = new DateTime(2021, 02, 10), ReturnDate = new DateTime(2021, 02, 12) });
+            //rentalManager.Insert(new Entities.Concrete.Rental { CarId = 3, CustomerId = 1, RentDate = new DateTime(2021, 02, 11), ReturnDate = null });
 
-            rentalManager.Insert(new Entities.Concrete.Rental { CarId = 3, CustomerId = 5, RentDate = new DateTime(2021, 02, 12), ReturnDate = null });
+            //rentalManager.Insert(new Entities.Concrete.Rental { CarId = 3, CustomerId = 5, RentDate = new DateTime(2021, 02, 12), ReturnDate = null });
+
+            var result = rentalManager.GetRentalDetails();
+
+            if (result.Success == true)
+            {
+                foreach (var rental in result.Data)
+                {
+                    Console.WriteLine(rental.FirstName + "/" + rental.LastName + "/" + rental.CarName + "/" + rental.RentDate + "/" + rental.ReturnDate);
+                }
+
+            }
         }
     }
 }
