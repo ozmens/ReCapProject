@@ -10,7 +10,7 @@ namespace Business.Abstract
 {
     public interface ICarService
     {
-        IResult Insert(Car car);
+        IResult Add(Car car);
         IResult Delete(Car car);
         IResult Update(Car car);
 

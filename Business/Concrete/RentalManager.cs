@@ -4,12 +4,14 @@ using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Business.Concrete
@@ -29,19 +31,28 @@ namespace Business.Concrete
 
         public IDataResult<List<Rental>> GetAll()
         {
-            return new SuccessResult<List<Rental>>(_rentalDal.GetAll());
+            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll());
         }
 
         public IDataResult<Rental> GetById(int id)
         {
-            return new SuccessResult<Rental>(_rentalDal.Get(r => r.Id == id), Messages.InfoGenerated);
+            return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.Id == id), Messages.InfoGenerated);
         }
 
         [ValidationAspect(typeof(RentalValidator))]
-        public IResult Insert(Rental rental)
+        public IResult Add(Rental rental)
         {
-            _rentalDal.Add(rental);
-            return new SuccessResult(Messages.RentalSuccess);
+            IResult result = BusinessRules.Run(CheckIfRentalCarIsAvailable(rental.CarId));
+
+            if (result != null)
+            {
+                return result;
+             
+            }
+            
+                _rentalDal.Add(rental);
+                return new SuccessResult(Messages.RentalSuccess);
+      
         }
 
         public IResult Update(Rental rental)
@@ -52,7 +63,20 @@ namespace Business.Concrete
 
         public IDataResult<List<RentalDetailDto>> GetRentalDetails()
         {
-            return new SuccessResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails(), Messages.ListGenerated);
+            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails(), Messages.ListGenerated);
+        }
+
+        private IResult CheckIfRentalCarIsAvailable(int carId)
+        {
+            var result = _rentalDal.GetAll(r => r.CarId == carId).Where(r => r.ReturnDate == null).Any();
+
+                if (result)
+                {
+                    return new ErrorResult(Messages.RentalFailed);
+                }
+
+            
+            return new SuccessResult(Messages.RentalSuccess);
         }
     }
 }

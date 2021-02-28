@@ -30,5 +30,6 @@ namespace Business.Constants
         public static string RentalFailed="Kiralama başarısız. Araç hala kirada";
         public static string RentalSuccess="Kiralama başarılı";
         public static string RentalUpdated = "Kiralama bilgisi güncellendi";
+        public static string AddImageOperationFailed="Bir araca ait en fazla 5 adet resim olabilir";
     }
 }

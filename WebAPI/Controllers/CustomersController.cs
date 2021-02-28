@@ -42,10 +42,10 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost("insert")]
-        public IActionResult Insert(Customer customer)
+        [HttpPost("Add")]
+        public IActionResult Add(Customer customer)
         {
-            var result = _customerService.Insert(customer);
+            var result = _customerService.Add(customer);
             if (result.Success)
             {
                 return Ok(result);

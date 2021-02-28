@@ -27,17 +27,17 @@ namespace Business.Concrete
 
         public IDataResult<List<Color>> GetAll()
         {
-            return new SuccessResult<List<Color>>(_colorDal.GetAll(),Messages.ListGenerated);
+            return new SuccessDataResult<List<Color>>(_colorDal.GetAll(),Messages.ListGenerated);
         }
 
         public IDataResult<Color> GetByColorId(int colorId)
         {
-            return new SuccessResult<Color>(_colorDal.Get(p => p.ColorId == colorId),Messages.InfoGenerated);
+            return new SuccessDataResult<Color>(_colorDal.Get(p => p.ColorId == colorId),Messages.InfoGenerated);
         }
 
 
 
-        public IResult Insert(Color color)
+        public IResult Add(Color color)
         {
             _colorDal.Add(color);
             return new SuccessResult(Messages.ColorAdded);

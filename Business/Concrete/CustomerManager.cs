@@ -26,15 +26,15 @@ namespace Business.Concrete
 
         public IDataResult<List<Customer>> GetAll()
         {
-            return new SuccessResult<List<Customer>>(_customerDal.GetAll(), Messages.ListGenerated);
+            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(), Messages.ListGenerated);
         }
 
         public IDataResult<Customer> GetByUserId(int userId)
         {
-            return new SuccessResult<Customer>(_customerDal.Get(c => c.UserId == userId), Messages.InfoGenerated);
+            return new SuccessDataResult<Customer>(_customerDal.Get(c => c.UserId == userId), Messages.InfoGenerated);
         }
 
-        public IResult Insert(Customer customer)
+        public IResult Add(Customer customer)
         {
             _customerDal.Add(customer);
             return new SuccessResult(Messages.CustomerAdded);

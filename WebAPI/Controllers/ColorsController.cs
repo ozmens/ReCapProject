@@ -42,10 +42,10 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost("insert")]
-        public IActionResult Insert(Color color)
+        [HttpPost("Add")]
+        public IActionResult Add(Color color)
         {
-            var result = _colorService.Insert(color);
+            var result = _colorService.Add(color);
             if (result.Success)
             {
                 return Ok(result);

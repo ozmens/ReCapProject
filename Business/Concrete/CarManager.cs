@@ -4,6 +4,7 @@ using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -25,10 +26,8 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(CarValidator))]
-        public IResult Insert(Car car)
+        public IResult Add(Car car)
         {
-
-
             _carDal.Add(car);
             return new SuccessResult(Messages.CarAdded);
 
@@ -42,7 +41,7 @@ namespace Business.Concrete
 
         public IDataResult<List<Car>> GetAll()
         {
-            return new SuccessResult<List<Car>>(_carDal.GetAll(), Messages.ListGenerated);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.ListGenerated);
         }
 
         [ValidationAspect(typeof(CarValidator))]
@@ -59,12 +58,12 @@ namespace Business.Concrete
 
         public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
-            return new SuccessResult<List<CarDetailDto>>(_carDal.GetCarDetails(), Messages.ListGenerated);
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(), Messages.ListGenerated);
         }
 
         public IDataResult<Car> GetById(int id)
         {
-            return new SuccessResult<Car>(_carDal.Get(c => c.Id == id), Messages.InfoGenerated);
+            return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == id), Messages.InfoGenerated);
         }
     }
 }
