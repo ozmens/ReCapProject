@@ -38,7 +38,7 @@ namespace Business.Concrete
                 image.ImagePath = FileHelper.AddAsync(file);
                 image.Date = DateTime.Now;
                 _imageDal.Add(image);
-                return new SuccessResult();
+                return new SuccessResult(Messages.ImageAdded);
             }
 
             [ValidationAspect(typeof(ImageValidator))]
@@ -49,7 +49,7 @@ namespace Business.Concrete
                 image.ImagePath = FileHelper.UpdateAsync(oldpath, file);
                 image.Date = DateTime.Now;
                 _imageDal.Update(image);
-                return new SuccessResult();
+                return new SuccessResult(Messages.ImageUpdated);
 
             }
 
@@ -68,7 +68,7 @@ namespace Business.Concrete
                 }
 
                 _imageDal.Delete(image);
-                return new SuccessResult();
+                return new SuccessResult(Messages.ImageDeleted);
             }
 
             public IDataResult<Image> GetByImageId(int id)
