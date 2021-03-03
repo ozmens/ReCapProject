@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Entities.Concrete;
+using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace Business.Constants
@@ -34,5 +36,12 @@ namespace Business.Constants
         public static string ImageAdded="Resim eklendi";
         public static string ImageUpdated="Resim güncellendi";
         public static string ImageDeleted="Resim Silindi";
+        public static string AuthorizationDenied="Yetkiniz yok";
+        public static string UserRegistered="Kullanıcı kayıt edildi";
+        public static string UserNotFound="Kullanıcı bulunamadı";
+        public static string PasswordError="Şifre hatalı";
+        public static string SuccessfulLogin="Giriş başarılı";
+        public static string UserAlreadyExists="Kullanıcı zaten mevcut";
+        public static string AccessTokenCreated="Giriş anahtarı oluşturuldu";
     }
 }
