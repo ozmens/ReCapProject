@@ -13,6 +13,7 @@ namespace Entities.DTOs
         public DateTime RentDate { get; set; }
 
         public DateTime? ReturnDate { get; set; }
+        public string BrandName { get; set; }
 
     }
 }

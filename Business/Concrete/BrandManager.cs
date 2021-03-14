@@ -47,7 +47,7 @@ namespace Business.Concrete
             
         }
 
-        IDataResult<List<Brand>> IBrandService.GetAll()
+        public IDataResult<List<Brand>> GetAll()
         {
             return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(),Messages.ListGenerated);
         }
@@ -56,5 +56,7 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<Brand>(_brandDal.Get(b => b.BrandId == brandId),Messages.InfoGenerated);
         }
+
+
     }
 }
