@@ -39,6 +39,12 @@ namespace Business.Concrete
             return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.Id == id), Messages.InfoGenerated);
         }
 
+        public IDataResult<Rental> GetByCarId(int carId)
+        {
+            return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.CarId == carId), Messages.InfoGenerated);
+        }
+
+
         [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental rental)
         {
@@ -54,6 +60,9 @@ namespace Business.Concrete
                 return new SuccessResult(Messages.RentalSuccess);
       
         }
+
+        
+    
 
         public IResult Update(Rental rental)
         {

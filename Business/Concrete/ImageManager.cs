@@ -81,16 +81,9 @@ namespace Business.Concrete
                 return new SuccessDataResult<List<Image>>(_imageDal.GetAll());
             }
 
-            public IDataResult<List<Image>> GetByCarId(int id)
+            public IDataResult<List<Image>> GetByCarId(int carId)
             {
-                IResult result = BusinessRules.Run(CheckIfCarImageNull(id));
-
-                if (result != null)
-                {
-                    return new ErrorDataResult<List<Image>>(result.Message);
-                }
-
-                return new SuccessDataResult<List<Image>>(CheckIfCarImageNull(id).Data);
+                return new SuccessDataResult<List<Image>>(_imageDal.GetAll(c => c.CarId == carId));
             }
 
             private IDataResult<List<Image>> CheckIfCarImageNull(int id)
@@ -101,9 +94,9 @@ namespace Business.Concrete
                     var result = _imageDal.GetAll(c => c.CarId == id).Any();
                     if (!result)
                     {
-                        List<Image> carimage = new List<Image>();
-                        carimage.Add(new Image { CarId = id, ImagePath = path, Date = DateTime.Now });
-                        return new SuccessDataResult<List<Image>>(carimage);
+                        List<Image> carImage = new List<Image>();
+                        carImage.Add(new Image { CarId = id, ImagePath = path, Date = DateTime.Now });
+                        return new SuccessDataResult<List<Image>>(carImage);
                     }
                 }
                 catch (Exception exception)

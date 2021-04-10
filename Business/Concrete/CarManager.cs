@@ -16,6 +16,7 @@ using Entities.DTOs;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Business.Concrete
@@ -46,7 +47,7 @@ namespace Business.Concrete
         }
 
         [CacheAspect]
-        //[PerformanceAspect(5)]
+        [PerformanceAspect(5)]
         public IDataResult<List<Car>> GetAll()
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.ListGenerated);
@@ -79,6 +80,21 @@ namespace Business.Concrete
         public IResult AddTransactionalTest(Car car)
         {
             throw new NotImplementedException();
+        }
+
+        public IDataResult<List<CarDetailDto>> GetCarDetailsByBrand(string brandName)
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetailsByBrand(brandName), Messages.ListGenerated);
+        }
+
+        public IDataResult<List<CarDetailDto>> GetCarDetailsByColor(string colorName)
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetailsByColor(colorName), Messages.ListGenerated);
+        }
+
+        public IDataResult<List<CarDetailDto>> GetCarDetailsById(int carId)
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetailsById(carId), Messages.ListGenerated);
         }
     }
 }

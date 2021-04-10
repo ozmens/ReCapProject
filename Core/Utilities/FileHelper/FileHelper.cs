@@ -73,7 +73,7 @@ namespace Core.Utilities.FileHelper
 
         public static (string newPath, string Path2) newPath(IFormFile file)
         {
-            System.IO.FileInfo ff = new System.IO.FileInfo(file.FileName);
+            FileInfo ff = new FileInfo(file.FileName);
 
             string fileExtension = ff.Extension;
 
